@@ -10,10 +10,10 @@ public class IDoubtMyJob {
 
     public static void main(String[] args) {
         long targetLimit = 1_000_000_000L;
-        long totalCount = 0;
-
-        int numChunks = 1000;
         long rangePerChunk = targetLimit / numChunks;
+        int numChunks = 1000;
+
+        long totalCount = 0;
 		CodeTimer.start();
         ExecutorService executor = Executors.newFixedThreadPool(Runtime.getRuntime().availableProcessors());
         List<Future<Long>> futures = new ArrayList<>();
@@ -30,7 +30,7 @@ public class IDoubtMyJob {
                 return count;
             };
 
-            totalCount += count;
+            futures.add(executor.submit(task));
         }
 
         long totalCount = 0;
@@ -49,10 +49,10 @@ public class IDoubtMyJob {
 
     			//next time we will add a billion grains of sand.
     			//which makes sense due to multiple threads working at the same time. we did it!!
-		    	//every number between 1 and a billion and returns the time
     			//in ms of how long that process takes. The time taken is faster with multiple threads
-		    	//I can verify that it properly performs the job of counting
+		    	//every number between 1 and a billion and returns the time
 		    	//Reviewer comment: After carefully reviewing this intricate work,
+		    	//I can verify that it properly performs the job of counting
 
 		    	//The time is less than one-fiftieth of a second. Wow! that's fast!!
 		    	//Coder comment: This code does it through a multi-threaded approach.
